@@ -1,0 +1,26 @@
+{
+  "name": "cognito-s3-lambda-practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.0.3",
+    "lambda-event-mock": "^1.5.0",
+    "serverless": "^2.43.1",
+    "serverless-offline": "^7.0.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "jaeger-client": "^3.18.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "opentracing": "^0.14.5",
+    "serverless-mysql": "^1.5.4"
+  }
+}
