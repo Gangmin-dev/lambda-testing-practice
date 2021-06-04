@@ -16,6 +16,8 @@ const mysql = require("serverless-mysql")({
 
 const getParts = require("../src/getParts");
 
+// TODO: MySql을 도커에 띄운 후에 connection이 가능할 때 까지 테스트를 진행하지 않도록 수정해야 함.
+
 describe("getParts", () => {
   test("create tables", async () => {
     await createTables(["subject", "course", "chapter", "part"]);
