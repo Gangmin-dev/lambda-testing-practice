@@ -1,6 +1,10 @@
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '12345678';
+CREATE USER 'user'@'%' IDENTIFIED BY '12345678';
 
 CREATE DATABASE IF NOT EXISTS `test_db`;
+
+GRANT ALL PRIVILEGES ON test_db.* TO 'user'@'%';
+FLUSH PRIVILEGES;
 
 -- USE `practice0427`;
 

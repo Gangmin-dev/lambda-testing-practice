@@ -3,13 +3,13 @@ const mysql = require("serverless-mysql")({
   config: {
     host: "localhost",
     port: 3336,
-    user: "root",
-    multipleStatements: true,
+    user: "user",
+    database: "test_db",
     // host: "mytestdatabase.c1t0iaypjlcw.ap-northeast-2.rds.amazonaws.com",
     // port: 3306,
     // user: "admin",
+    // database: "practice0427",
     password: "12345678",
-    database: "practice0427",
   },
 });
 
@@ -22,7 +22,7 @@ module.exports.handler = async (event) => {
       }),
     };
   }
-  console.log("hi");
+
   return mysql
     .query(
       `SELECT id, number, title FROM chapter WHERE course_id = ? ORDER BY id`,
