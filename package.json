@@ -4,7 +4,7 @@
   "description": "",
   "main": "handler.js",
   "scripts": {
-    "test": "jest"   
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +21,7 @@
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
     "opentracing": "^0.14.5",
-    "serverless-mysql": "^1.5.4"
+    "serverless-mysql": "^1.5.4",
+    "testcontainers": "^7.11.1"
   }
 }

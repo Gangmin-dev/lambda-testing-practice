@@ -1,13 +1,11 @@
-const { expect, test } = require("@jest/globals");
+const { expect, test, beforeAll, afterAll } = require("@jest/globals");
 const lambdaEventMock = require("lambda-event-mock");
 const fs = require("fs");
 const path = require("path");
-
+const { DockerComposeEnvironment, Wait } = require("testcontainers");
 const mysql = require("serverless-mysql")({
   library: require("mysql2"),
   config: {
-    host: "localhost",
-    port: 3336,
     user: "root",
     database: "test_db",
     password: "12345678",
@@ -19,6 +17,31 @@ const getParts = require("../src/getParts");
 // TODO: MySql을 도커에 띄운 후에 connection이 가능할 때 까지 테스트를 진행하지 않도록 수정해야 함.
 
 describe("getParts", () => {
+  let environment;
+
+  beforeAll(async () => {
+    environment = await new DockerComposeEnvironment(
+      path.join(__dirname, "../"),
+      "docker-compose.yml"
+    )
+      // .withWaitStrategy(
+      //   "test-db",
+      //   Wait.forLogMessage("mysqld: ready for connections.")
+      // )
+      .up();
+    console.log(environment);
+    const mysqlContainer = environment.getContainer("test-db");
+    console.log(mysqlContainer);
+
+    process.env.DB_HOST = mysqlContainer.getHost();
+    process.env.DB_PORT = mysqlContainer.getMappedPort(3306);
+
+    mysql.config({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+    });
+  }, 30000);
+
   test("create tables", async () => {
     await createTables(["subject", "course", "chapter", "part"]);
 
@@ -64,6 +87,11 @@ describe("getParts", () => {
 
     return getParts.handler(event).then((result) => expect(result).toEqual([]));
   });
+
+  afterAll(async () => {
+    await mysql.end();
+    await environment.down();
+  }, 20000);
 });
 
 async function createTables(tables) {

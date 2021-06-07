@@ -3,7 +3,7 @@ const mysql = require("serverless-mysql")({
   config: {
     host: "localhost",
     port: 3336,
-    user: "user",
+    user: "root",
     database: "test_db",
     // host: "mytestdatabase.c1t0iaypjlcw.ap-northeast-2.rds.amazonaws.com",
     // port: 3306,
