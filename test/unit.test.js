@@ -43,9 +43,12 @@ describe("getParts", () => {
   }, 30000);
 
   test("create tables", async () => {
-    await createTables(["subject", "course", "chapter", "part"]);
+    let tables = ["subject", "course", "chapter", "part"];
+    await createTables(tables);
 
-    expect().toEqual();
+    return mysql.query(`SHOW TABLES`).then((result) => {
+      expect(result.length).toBe(tables.length);
+    });
   });
 
   test("course_id is not in the queryString", () => {
