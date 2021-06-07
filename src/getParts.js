@@ -1,15 +1,11 @@
 const mysql = require("serverless-mysql")({
   library: require("mysql2"),
   config: {
-    host: "localhost",
-    port: 3336,
-    user: "root",
-    database: "test_db",
-    // host: "mytestdatabase.c1t0iaypjlcw.ap-northeast-2.rds.amazonaws.com",
-    // port: 3306,
-    // user: "admin",
-    // database: "practice0427",
-    password: "12345678",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
   },
 });
 
