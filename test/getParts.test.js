@@ -6,9 +6,11 @@ const { DockerComposeEnvironment } = require("testcontainers");
 const mysql = require("serverless-mysql")({
   library: require("mysql2"),
   config: {
-    user: "root",
-    database: "test_db",
-    password: "12345678",
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
   },
 });
 
@@ -22,16 +24,6 @@ describe("getParts", () => {
       path.join(__dirname, "../"),
       "docker-compose.yml"
     ).up();
-
-    const mysqlContainer = environment.getContainer("test-db");
-
-    process.env.DB_HOST = mysqlContainer.getHost();
-    process.env.DB_PORT = mysqlContainer.getMappedPort(3306);
-
-    mysql.config({
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-    });
   }, 30000);
 
   test("create tables", async () => {
