@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const mysql = require("serverless-mysql")({
   library: require("mysql2"),
   config: {
@@ -11,7 +12,7 @@ const mysql = require("serverless-mysql")({
 });
 
 async function createTables(tables) {
-  const sqlPath = path.join(__dirname, "../sql/src");
+  const sqlPath = path.join(__dirname, "../../sql/src");
   let sql = "";
 
   for (let tableName of tables) {
@@ -25,7 +26,7 @@ async function createTables(tables) {
 }
 
 async function insertGivenData(tables) {
-  const sqlPath = path.join(__dirname, "../sql/testdata");
+  const sqlPath = path.join(__dirname, "../../sql/testdata");
   let sql = "";
 
   for (let tableName of tables) {
