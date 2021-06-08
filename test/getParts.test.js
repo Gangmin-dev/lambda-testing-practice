@@ -29,7 +29,7 @@ describe("getParts", () => {
     await createTables(expectedTables);
   }, 30000);
 
-  test("course_id is not in the queryString", () => {
+  test("When course_id is not in the queryString", () => {
     const event = lambdaEventMock
       .apiGateway()
       .path("/parts")
@@ -47,7 +47,7 @@ describe("getParts", () => {
     );
   });
 
-  test("course_id에 해당하는 part가 없을 때", () => {
+  test("When there isn't any parts corresponding to course_id", () => {
     const event = lambdaEventMock
       .apiGateway()
       .path("/parts")
@@ -63,7 +63,7 @@ describe("getParts", () => {
     );
   });
 
-  test("course_id에 해당하는 part가 있을 때", () => {
+  test("When there are some parts corresponding to course_id", () => {
     const event = lambdaEventMock
       .apiGateway()
       .path("/parts")
