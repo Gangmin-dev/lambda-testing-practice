@@ -96,6 +96,7 @@ async function createTables(tables) {
 
   mysql.config({ multipleStatements: true });
   await mysql.query(sql).catch(console.log);
+  mysql.config({ multipleStatements: false });
   mysql.end();
 }
 
@@ -109,5 +110,6 @@ async function insertGivenData(tables) {
 
   mysql.config({ multipleStatements: true });
   await mysql.query(sql).catch(console.log);
+  mysql.config({ multipleStatements: false });
   mysql.end();
 }
