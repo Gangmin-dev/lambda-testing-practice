@@ -25,6 +25,7 @@ describe("getParts", () => {
       "docker-compose.yml"
     ).up();
 
+    // Given
     let expectedTables = ["subject", "course", "chapter", "part"];
     await createTables(expectedTables);
     await insertGivenData(expectedTables);
@@ -39,6 +40,7 @@ describe("getParts", () => {
       .build();
 
     return getParts.handler(event).then((result) => {
+      // Then
       expect(result.statusCode).toBe(400);
       expect(result.body).toEqual(
         JSON.stringify({
@@ -57,6 +59,7 @@ describe("getParts", () => {
       .build();
 
     return getParts.handler(event).then((result) => {
+      // Then
       expect(result.statusCode).toBe(404);
       expect(result.body).toEqual(
         JSON.stringify({
@@ -75,6 +78,7 @@ describe("getParts", () => {
       .build();
 
     return getParts.handler(event).then((result) => {
+      // Then
       expect(result.statusCode).toBe(200);
       expect(result.body).toEqual(JSON.stringify({}));
     });
