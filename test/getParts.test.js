@@ -1,6 +1,5 @@
 const { expect, test, beforeAll, afterAll } = require("@jest/globals");
 const lambdaEventMock = require("lambda-event-mock");
-const path = require("path");
 const { mysql, createTables, insertGivenData } = require("./lib/mysql");
 
 const getParts = require("../src/getParts");
