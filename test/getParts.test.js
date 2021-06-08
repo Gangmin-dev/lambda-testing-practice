@@ -15,71 +15,73 @@ const mysql = require("serverless-mysql")({
 
 const getParts = require("../src/getParts");
 
-describe("getParts", () => {
-  beforeAll(async () => {
-    // Given
-    let expectedTables = ["subject", "course", "chapter", "part"];
-    await createTables(expectedTables);
-    await insertGivenData(expectedTables);
-  }, 30000);
+const getPartsTest = () => {
+  describe("getParts", () => {
+    beforeAll(async () => {
+      // Given
+      let expectedTables = ["subject", "course", "chapter", "part"];
+      await createTables(expectedTables);
+      await insertGivenData(expectedTables);
+    }, 30000);
 
-  test("When course_id is not in the queryString", () => {
-    const event = lambdaEventMock
-      .apiGateway()
-      .path("/parts")
-      .method("GET")
-      .queryStringParameters({ courseId: 3 })
-      .build();
+    test("When course_id is not in the queryString", () => {
+      const event = lambdaEventMock
+        .apiGateway()
+        .path("/parts")
+        .method("GET")
+        .queryStringParameters({ courseId: 3 })
+        .build();
 
-    return getParts.handler(event).then((result) => {
-      // Then
-      expect(result.statusCode).toBe(400);
-      expect(result.body).toEqual(
-        JSON.stringify({
-          message: "there is no matching queryString",
-        })
-      );
+      return getParts.handler(event).then((result) => {
+        // Then
+        expect(result.statusCode).toBe(400);
+        expect(result.body).toEqual(
+          JSON.stringify({
+            message: "there is no matching queryString",
+          })
+        );
+      });
     });
-  });
 
-  test("When there isn't any parts corresponding to course_id", () => {
-    const event = lambdaEventMock
-      .apiGateway()
-      .path("/parts")
-      .method("GET")
-      .queryStringParameters({ course_id: 3 })
-      .build();
+    test("When there isn't any parts corresponding to course_id", () => {
+      const event = lambdaEventMock
+        .apiGateway()
+        .path("/parts")
+        .method("GET")
+        .queryStringParameters({ course_id: 3 })
+        .build();
 
-    return getParts.handler(event).then((result) => {
-      // Then
-      expect(result.statusCode).toBe(404);
-      expect(result.body).toEqual(
-        JSON.stringify({
-          message: "해당하는 과목 정보가 없습니다.",
-        })
-      );
+      return getParts.handler(event).then((result) => {
+        // Then
+        expect(result.statusCode).toBe(404);
+        expect(result.body).toEqual(
+          JSON.stringify({
+            message: "해당하는 과목 정보가 없습니다.",
+          })
+        );
+      });
     });
-  });
 
-  test("When there are some parts corresponding to course_id", () => {
-    const event = lambdaEventMock
-      .apiGateway()
-      .path("/parts")
-      .method("GET")
-      .queryStringParameters({ course_id: 7 })
-      .build();
+    test("When there are some parts corresponding to course_id", () => {
+      const event = lambdaEventMock
+        .apiGateway()
+        .path("/parts")
+        .method("GET")
+        .queryStringParameters({ course_id: 7 })
+        .build();
 
-    return getParts.handler(event).then((result) => {
-      // Then
-      expect(result.statusCode).toBe(200);
-      expect(result.body).toEqual(JSON.stringify({}));
+      return getParts.handler(event).then((result) => {
+        // Then
+        expect(result.statusCode).toBe(200);
+        expect(result.body).toEqual(JSON.stringify({}));
+      });
     });
-  });
 
-  afterAll(async () => {
-    await mysql.end();
-  }, 20000);
-});
+    afterAll(async () => {
+      await mysql.end();
+    }, 20000);
+  });
+};
 
 async function createTables(tables) {
   const sqlPath = path.join(__dirname, "../sql/src");
@@ -108,3 +110,5 @@ async function insertGivenData(tables) {
   mysql.config({ multipleStatements: false });
   mysql.end();
 }
+
+module.exports = getPartsTest;
