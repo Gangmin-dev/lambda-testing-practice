@@ -37,14 +37,14 @@ describe("getParts", () => {
       .queryStringParameters({ courseId: 3 })
       .build();
 
-    return getParts.handler(event).then((result) =>
-      expect(result).toEqual({
-        statusCode: 400,
-        body: JSON.stringify({
+    return getParts.handler(event).then((result) => {
+      expect(result.statusCode).toBe(400);
+      expect(result.body).toEqual(
+        JSON.stringify({
           message: "there is no matching queryString",
-        }),
-      })
-    );
+        })
+      );
+    });
   });
 
   test("When there isn't any parts corresponding to course_id", () => {
@@ -55,12 +55,14 @@ describe("getParts", () => {
       .queryStringParameters({ course_id: 3 })
       .build();
 
-    return getParts.handler(event).then((result) =>
-      expect(result).toEqual({
-        statusCode: 404,
-        body: JSON.stringify({ message: "해당하는 과목 정보가 없습니다." }),
-      })
-    );
+    return getParts.handler(event).then((result) => {
+      expect(result.statusCode).toBe(404);
+      expect(result.body).toEqual(
+        JSON.stringify({
+          message: "해당하는 과목 정보가 없습니다.",
+        })
+      );
+    });
   });
 
   test("When there are some parts corresponding to course_id", () => {
@@ -71,7 +73,10 @@ describe("getParts", () => {
       .queryStringParameters({ course_id: 7 })
       .build();
 
-    return getParts.handler(event).then((result) => expect(result).toEqual([]));
+    return getParts.handler(event).then((result) => {
+      expect(result.statusCode).toBe(200);
+      expect(result.body).toEqual(JSON.stringify({}));
+    });
   });
 
   afterAll(async () => {
