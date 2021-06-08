@@ -2,7 +2,6 @@ const { expect, test, beforeAll, afterAll } = require("@jest/globals");
 const lambdaEventMock = require("lambda-event-mock");
 const fs = require("fs");
 const path = require("path");
-const { DockerComposeEnvironment } = require("testcontainers");
 const mysql = require("serverless-mysql")({
   library: require("mysql2"),
   config: {
@@ -20,11 +19,6 @@ describe("getParts", () => {
   let environment;
 
   beforeAll(async () => {
-    environment = await new DockerComposeEnvironment(
-      path.join(__dirname, "../"),
-      "docker-compose.yml"
-    ).up();
-
     // Given
     let expectedTables = ["subject", "course", "chapter", "part"];
     await createTables(expectedTables);
@@ -86,7 +80,6 @@ describe("getParts", () => {
 
   afterAll(async () => {
     await mysql.end();
-    await environment.down();
   }, 20000);
 });
 
