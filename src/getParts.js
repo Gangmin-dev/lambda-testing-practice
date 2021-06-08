@@ -21,8 +21,51 @@ module.exports.handler = async (event) => {
 
   return mysql
     .query(
-      `SELECT id, number, title FROM chapter WHERE course_id = ? ORDER BY id`,
+      `
+      SELECT chapter.id, chapter.number, chapter.title, part.id as partId, part.title as partTitle FROM chapter
+      LEFT JOIN part ON part.chapter_id = chapter.id
+      WHERE chapter.course_id = ?
+      ORDER BY chapter.id
+      `,
       [event.queryStringParameters.course_id]
     )
+    .then((chaptersWithParts) => {
+      if (chaptersWithParts.length === 0) {
+        return {
+          statusCode: 404,
+          body: JSON.stringify({
+            message: "해당하는 과목 정보가 없습니다.",
+          }),
+        };
+      }
+
+      let chapters = [];
+      let lastIndex;
+      let currentChapterIndex;
+
+      for (let i = 0; i < chaptersWithParts.length; i++) {
+        if (
+          i === 0 ||
+          chaptersWithParts[lastIndex].id != chaptersWithParts[i].id
+        ) {
+          currentChapterIndex =
+            chapters.push({
+              id: chaptersWithParts[i].id,
+              number: chaptersWithParts[i].number,
+              title: chaptersWithParts[i].title,
+              parts: [],
+            }) - 1;
+        }
+        chapters[currentChapterIndex].parts.push({
+          id: chaptersWithParts[i].partId,
+          title: chaptersWithParts[i].partTitle,
+        });
+        lastIndex = i;
+      }
+      return {
+        statusCode: 200,
+        body: JSON.stringify(chapters),
+      };
+    })
     .finally(mysql.end());
 };
