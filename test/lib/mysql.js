@@ -37,3 +37,9 @@ async function insertGivenData(tables) {
   mysql.config({ multipleStatements: false });
   mysql.end();
 }
+
+module.exports = {
+  mysql,
+  createTables,
+  insertGivenData,
+};
