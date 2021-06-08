@@ -24,16 +24,10 @@ describe("getParts", () => {
       path.join(__dirname, "../"),
       "docker-compose.yml"
     ).up();
-  }, 30000);
 
-  test("create tables", async () => {
     let tables = ["subject", "course", "chapter", "part"];
     await createTables(tables);
-
-    return mysql.query(`SHOW TABLES`).then((result) => {
-      expect(result.length).toBe(tables.length);
-    });
-  });
+  }, 30000);
 
   test("course_id is not in the queryString", () => {
     const event = lambdaEventMock
@@ -61,7 +55,12 @@ describe("getParts", () => {
       .queryStringParameters({ course_id: 3 })
       .build();
 
-    return getParts.handler(event).then((result) => expect(result).toEqual([]));
+    return getParts.handler(event).then((result) =>
+      expect(result).toEqual({
+        statusCode: 404,
+        body: JSON.stringify({ message: "해당하는 과목 정보가 없습니다." }),
+      })
+    );
   });
 
   test("course_id에 해당하는 part가 있을 때", () => {
