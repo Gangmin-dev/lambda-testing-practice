@@ -27,6 +27,7 @@ describe("getParts", () => {
 
     let expectedTables = ["subject", "course", "chapter", "part"];
     await createTables(expectedTables);
+    await insertGivenData(expectedTables);
   }, 30000);
 
   test("When course_id is not in the queryString", () => {
@@ -87,6 +88,19 @@ describe("getParts", () => {
 
 async function createTables(tables) {
   const sqlPath = path.join(__dirname, "../sql/src");
+  let sql = "";
+
+  for (let tableName of tables) {
+    sql += fs.readFileSync(path.join(sqlPath, `/${tableName}.sql`)).toString();
+  }
+
+  mysql.config({ multipleStatements: true });
+  await mysql.query(sql).catch(console.log);
+  mysql.end();
+}
+
+async function insertGivenData(tables) {
+  const sqlPath = path.join(__dirname, "../sql/testdata");
   let sql = "";
 
   for (let tableName of tables) {
