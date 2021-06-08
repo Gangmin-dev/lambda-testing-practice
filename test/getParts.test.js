@@ -25,8 +25,8 @@ describe("getParts", () => {
       "docker-compose.yml"
     ).up();
 
-    let tables = ["subject", "course", "chapter", "part"];
-    await createTables(tables);
+    let expectedTables = ["subject", "course", "chapter", "part"];
+    await createTables(expectedTables);
   }, 30000);
 
   test("course_id is not in the queryString", () => {
