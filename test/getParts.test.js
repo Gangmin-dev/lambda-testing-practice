@@ -6,8 +6,6 @@ const { mysql, createTables, insertGivenData } = require("./lib/mysql");
 const getParts = require("../src/getParts");
 
 describe("getParts", () => {
-  let environment;
-
   beforeAll(async () => {
     // Given
     let expectedTables = ["subject", "course", "chapter", "part"];
