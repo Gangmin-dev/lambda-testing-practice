@@ -19,7 +19,7 @@ describe("getParts", () => {
     let expectedTables = ["subject", "course", "chapter", "part"];
     await createTables(expectedTables);
     await insertGivenData(expectedTables);
-  }, 30000);
+  }, 60000);
 
   test("When course_id is not in the queryString", () => {
     const event = lambdaEventMock
