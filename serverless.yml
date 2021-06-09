@@ -15,7 +15,7 @@ provider:
     DB_HOST: ${self:custom.env.DB_HOST}
     DB_PORT: ${self:custom.env.DB_PORT}
     DB_USER: ${self:custom.env.DB_USER}
-    DB_PASSWD: ${self:custom.env.DB_PASSWD}
+    DB_PASSWORD: ${self:custom.env.DB_PASSWORD}
     DB_NAME: ${self:custom.env.DB_NAME}
 
 # you can overwrite defaults here
