@@ -4,6 +4,7 @@ phases:
   pre_build:
     commands:
       - npm install --no-progress --silent
+      - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
   build:
     commands:
       - npm run test
