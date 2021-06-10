@@ -19,7 +19,7 @@ phases:
       - serverless package --stage dev --region ap-northeast-2
       - serverless package --stage prod --region ap-northeast-2
 
-  artifacts:
-    files:
-      - target/**/*
-      - serverless.yml
+artifacts:
+  files:
+    - target/**/*
+    - serverless.yml
