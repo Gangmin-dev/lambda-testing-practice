@@ -10,7 +10,7 @@ beforeAll(async () => {
     path.join(__dirname, "../"),
     "docker-compose.yml"
   ).up();
-}, 30000);
+}, 60000);
 
 afterAll(async () => {
   await environment.down();
