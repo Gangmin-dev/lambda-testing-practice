@@ -1,9 +1,7 @@
 service: cognito-s3-lambda-practice
 
 frameworkVersion: '2'
-
-custom:
-  env: ${file(./env/${opt:stage, 'local'}.json)}
+variablesResolutionMode: 20210326
 
 provider:
   name: aws
@@ -12,11 +10,11 @@ provider:
   lambdaHashingVersion: 20201221
   environment:
     NODE_PATH: "./:/opt/node_modules"
-    DB_HOST: ${self:custom.env.DB_HOST}
-    DB_PORT: ${self:custom.env.DB_PORT}
-    DB_USER: ${self:custom.env.DB_USER}
-    DB_PASSWORD: ${self:custom.env.DB_PASSWORD}
-    DB_NAME: ${self:custom.env.DB_NAME}
+    DB_HOST: ${ssm:/${opt:stage, 'local'}/DB_HOST}
+    DB_PORT: ${ssm:/${opt:stage, 'local'}/DB_PORT}
+    DB_USER: ${ssm:/${opt:stage, 'local'}/DB_USER}
+    DB_PASSWORD: ${ssm:/${opt:stage, 'local'}/DB_PASSWORD}
+    DB_NAME: ${ssm:/${opt:stage, 'local'}/DB_NAME}
 
 package:
   individually: true
