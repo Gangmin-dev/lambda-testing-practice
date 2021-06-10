@@ -14,3 +14,12 @@ phases:
   build:
     commands:
       - npm run test
+      - mkdir -p target/dev
+      - mkdir target/prod
+      - serverless package --stage dev --region ap-northeast-2
+      - serverless package --stage prod --region ap-northeast-2
+
+  artifacts:
+    files:
+      - target/**/*
+      - serverless.yml
