@@ -54,6 +54,7 @@ functions:
       patterns:
         - 'src/getParts.js'
         - 'node_moudles/serverless-mysql'
+        - 'node_moudles/mysql2'
     events:
       - httpApi:
           path: /parts
