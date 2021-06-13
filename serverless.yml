@@ -36,16 +36,16 @@ functions:
           method: GET
           cors: true
         
-  cognitoPostConfirm:
-    handler: cognitoPostConfirm.handler
-    package:
-      patterns:
-        - 'cognitoPostConfirm.js'
-    events:
-      - cognitoUserPool:
-          pool: ap-northeast-2_2VMRFBVwT
-          trigger: PostConfirmation
-          existing: true
+  # cognitoPostConfirm:
+  #   handler: cognitoPostConfirm.handler
+  #   package:
+  #     patterns:
+  #       - 'cognitoPostConfirm.js'
+  #   events:
+  #     - cognitoUserPool:
+  #         pool: ap-northeast-2_2VMRFBVwT
+  #         trigger: PostConfirmation
+  #         existing: true
 
 plugins:
   - serverless-offline
