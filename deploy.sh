@@ -10,4 +10,4 @@ ls -al
 cd dev
 ls -al
 cd ../..
-serverless deploy --stage $env --package target/$env --region ap-northeast-2 -v
+serverless deploy --stage $env --package target/dev --region ap-northeast-2 -v
